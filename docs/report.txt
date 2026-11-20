@@ -1,8 +1,8 @@
-Son qurulma: 2026-11-20T02:11:14.215Z
+Son qurulma: 2026-11-20T03:01:02.853Z
 Sayt: https://www.analizant.com
-Yoxlanan yazı: 29
-Tərcümə qrupu (yazı): 1
+Yoxlanan yazı: 31
+Tərcümə qrupu (yazı): 2
 Tərcümə qrupu (səhifə): 0
-Sitemap-dəki URL: 3
+Sitemap-dəki URL: 6
 
 Xəbərdarlıq yoxdur.
