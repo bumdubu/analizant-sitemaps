@@ -1,8 +1,11 @@
-// Analizant — hreflang sitemap generatoru v1.0
+// Analizant — hreflang sitemap generatoru v1.1
 // Blogger feed-ini oxuyur, tg-* etiketinə görə tərcümə qruplarını yığır,
 // docs/sitemap-hreflang.xml faylını qurur. Node 20+ (daxili fetch).
+// v1.1: ana səhifə üçün yüngül indeks — docs/home-index.json (hər yazının örtük şəkli və təsviri).
+//       Ana səhifə kartları bu indeksi oxuyur və hər kart üçün yazının tam mətnini endirmir.
 
 import { writeFile, readFile, mkdir } from 'node:fs/promises';
+import { parseHTML } from 'linkedom';
 
 const SITE = (process.env.SITE || 'https://www.analizant.com').replace(/\/$/, '');
 const LANGS = ['az', 'en', 'ru'];
@@ -29,6 +32,25 @@ async function fetchAllPosts() {
     if (entries.length < PAGE_SIZE) break;
   }
   return out;
+}
+
+// Ana səhifə indeksi: temadakı məntiqin eynisi (təsvir + örtük şəkli).
+// d — .homepage-description, yoxsa 80 simvoldan uzun ilk <p> (sənəd sırası ilə — brauzerdəki kimi)
+// i — #hero img, yoxsa ilk <img>;  u — yazının son yenilənmə vaxtı (köhnəlmiş qeydi tanımaq üçün)
+const DESC_SEL = '.homepage-description, #homepage-description, [data-homepage-description]';
+const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+function indexEntry(e) {
+  const m = String((e.id && e.id.$t) || '').match(/post-(\d+)/);
+  if (!m) return null;
+  const html = (e.content && e.content.$t) || '';
+  const { document } = parseHTML('<!doctype html><html><body>' + html + '</body></html>');
+  const dn = document.querySelector(DESC_SEL);
+  let d = dn ? norm(dn.getAttribute('data-homepage-description') || dn.textContent) : '';
+  if (!d) for (const n of document.querySelectorAll('p')) { const x = norm(n.textContent); if (x.length > 80) { d = x; break; } }
+  const im = document.querySelector('#hero img') || document.querySelector('img');
+  let i = im ? (im.getAttribute('src') || '') : '';
+  if (!/^https?:|^\/\//.test(i)) i = '';
+  return [m[1], { i, d: d.slice(0, 600), u: (e.updated && e.updated.$t) || '' }];
 }
 
 function parseEntry(e) {
@@ -80,7 +102,8 @@ function urlBlock(selfUrl, updated, versions) {
 }
 
 async function main() {
-  const posts = (await fetchAllPosts()).map(parseEntry);
+  const raw = await fetchAllPosts();
+  const posts = raw.map(parseEntry);
   const groups = new Map();
 
   for (const p of posts) {
@@ -123,6 +146,10 @@ ${blocks.join('\n')}
   await writeFile(new URL('./docs/pages.json', import.meta.url),
     JSON.stringify({ groups: pageGroups.map((g) => Object.fromEntries(Object.entries(g.versions).map(([l, v]) => [l, v.url]))) }, null, 2));
   await writeFile(new URL('./docs/.nojekyll', import.meta.url), '');
+  // Ana səhifə indeksi
+  const index = { v: 1, built: new Date().toISOString(), posts: {} };
+  for (const e of raw) { try { const r = indexEntry(e); if (r) index.posts[r[0]] = r[1]; } catch (err) { warn('indeks: ' + (e.title && e.title.$t) + ' — ' + err.message); } }
+  await writeFile(new URL('./docs/home-index.json', import.meta.url), JSON.stringify(index));
 
   const report = [
     `Son qurulma: ${new Date().toISOString()}`,
@@ -131,6 +158,7 @@ ${blocks.join('\n')}
     `Tərcümə qrupu (yazı): ${postGroups}`,
     `Tərcümə qrupu (səhifə): ${pageGroups.filter((g) => Object.keys(g.versions).length > 1).length}`,
     `Sitemap-dəki URL: ${blocks.length}`,
+    `Ana səhifə indeksi: ${Object.keys(index.posts).length} yazı`,
     '',
     warnings.length ? 'XƏBƏRDARLIQLAR:\n- ' + warnings.join('\n- ') : 'Xəbərdarlıq yoxdur.',
   ].join('\n');
