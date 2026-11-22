@@ -18,7 +18,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Sitemap qur
+      - name: Asılılıq (HTML oxuyucu)
+        run: npm install --no-save --no-package-lock linkedom@0.18.5
+      - name: Sitemap və ana səhifə indeksini qur
         run: node build.mjs
         env:
           SITE: https://www.analizant.com
