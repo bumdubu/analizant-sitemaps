@@ -1,9 +1,10 @@
-Son qurulma: 2026-11-22T23:16:41.465Z
+Son qurulma: 2026-11-23T09:14:31.524Z
 Sayt: https://www.analizant.com
-Yoxlanan yazı: 31
+Yoxlanan yazı: 32
 Tərcümə qrupu (yazı): 2
 Tərcümə qrupu (səhifə): 0
 Sitemap-dəki URL: 6
-Ana səhifə indeksi: 31 yazı
+Ana səhifə indeksi: 32 yazı
 
-Xəbərdarlıq yoxdur.
+XƏBƏRDARLIQLAR:
+- family:avropa-niye-avrasiyali-olmaq-istemir — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
