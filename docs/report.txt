@@ -1,10 +1,12 @@
-Son qurulma: 2026-11-24T11:07:49.410Z
+Son qurulma: 2026-11-25T09:56:15.182Z
 Sayt: https://www.analizant.com
-Yoxlanan yazı: 32
+Yoxlanan yazı: 13
 Tərcümə qrupu (yazı): 2
 Tərcümə qrupu (səhifə): 0
 Sitemap-dəki URL: 6
-Ana səhifə indeksi: 32 yazı
+Ana səhifə indeksi: 13 yazı
 
 XƏBƏRDARLIQLAR:
+- family:nato-demir-zireh-muqevva — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
+- family:bolivarin-kolgesi — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
 - family:avropa-niye-avrasiyali-olmaq-istemir — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
