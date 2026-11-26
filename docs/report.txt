@@ -1,4 +1,4 @@
-Son qurulma: 2026-11-25T09:56:15.182Z
+Son qurulma: 2026-11-26T09:40:04.289Z
 Sayt: https://www.analizant.com
 Yoxlanan yazı: 13
 Tərcümə qrupu (yazı): 2
@@ -7,6 +7,7 @@ Sitemap-dəki URL: 6
 Ana səhifə indeksi: 13 yazı
 
 XƏBƏRDARLIQLAR:
+- family:insan-tehlukesizliyi-nece-ve-niye-deyisir — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
 - family:nato-demir-zireh-muqevva — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
 - family:bolivarin-kolgesi — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
 - family:avropa-niye-avrasiyali-olmaq-istemir — qrupda tək versiya var (az); tərcümə hələ yayımlanmayıb?
